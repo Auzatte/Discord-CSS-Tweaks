@@ -1,0 +1,176 @@
+:root {
+    --guildbar-avatar-size: 48px !important;
+    --custom-channel-textarea-text-area-height: 56px;
+}
+
+/* Guilds Navigation Styling */
+.visual-refresh nav[class*="guilds_"] {
+    /* Uncomment if you changed up your nameplace */
+    /* margin: 0;
+    [class*="sidebar_"]:has(&)::after {
+        height: 0;
+    } */
+
+    [class*="listItem__"] {
+        /* Avatar & Icon Styling */
+        [class*="childWrapper__"],
+        [class*="childWrapper__"] img,
+        [class*="icon_"],
+        [class*="circleIconButton__"] {
+            border-radius: 100% !important;
+            transition: border-radius 150ms;
+        }
+
+        /* Selected State */
+        [class*="selected__"] {
+            [class*="childWrapper__"],
+            [class*="childWrapper__"] img,
+            [class*="icon_"],
+            [class*="circleIconButton__"] {
+                border-radius: 0 !important;
+            }
+        }
+
+        /* SVG & Badge Positioning */
+        svg {
+            top: 0px;
+            left: 0px;
+
+            &:not([class*="folderIcon__"]) > mask {
+                use[href$="-lower_badge_masks"] { transform: translate(8px, 8px); }
+                use[href$="-upper_badge_masks"] { transform: translate(8px, 0px); }
+            }
+
+            foreignObject {
+                width: var(--guildbar-avatar-size);
+                height: var(--guildbar-avatar-size);
+                transform: translate(-4px, -4px);
+            }
+        }
+
+        /* Icon Sizing */
+        defs > path {
+            d: path("M0 24C0 16.5449 0 12.8174 1.21793 9.87706C2.84183 5.95662 5.95662 2.84183 9.87706 1.21793C12.8174 0 16.5449 0 24 0C31.4551 0 35.1826 0 38.1229 1.21793C42.0434 2.84183 45.1582 5.95662 46.7821 9.87706C48 12.8174 48 16.5449 48 24C48 31.4551 48 35.1826 46.7821 38.1229C45.1582 42.0434 42.0434 45.1582 38.1229 46.7821C35.1826 48 31.4551 48 24 48C16.5449 48 12.8174 48 9.87706 46.7821C5.95662 45.1582 2.84183 42.0434 1.21793 38.1229C0 35.1826 0 31.4551 0 24Z");
+        }
+
+        [class*="childWrapper__"] > svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        [class*="iconSizeMini_"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        [class*=expandedFolderIconWrapper__] svg {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    /* Stack Layout Adjustments */
+    [class*="stack_"] {
+        & > div:not([class]):has([class*="listItem__"]) {
+            height: 48px !important;
+        }
+
+        [class*="isExpanded__"] & {
+            height: auto !important;
+        }
+    }
+}
+
+/* Form & Text Area Adjustments */
+.visual-refresh {
+    .form_f75fb0 {
+        display: flex;
+        flex-direction: column;
+        padding: 0 8px 8px 8px;
+        
+        &:has(.base_b88801) {
+            .channelTextArea_f75fb0 { border-radius: 0 0 var(--radius-sm) var(--radius-sm); }
+            .stackedBars__74017 { border-radius: 0; }
+        }
+
+        &:has(.channelTextArea__74017:focus-within) {
+            .base_b88801 { border-color: var(--border-subtle); }
+            .stackedBars__74017 { border-color: var(--border-subtle) !important; }
+        }
+    }
+
+    .channelTextArea_f75fb0 { margin-bottom: 0; }
+
+    .base_b88801 {
+        position: static;
+        order: -1;
+        padding: 0 8px;
+        background-color: var(--chat-background-default);
+        transition: border-color .2s ease;
+        border: 1px solid var(--border-faint);
+        border-bottom: none;
+        border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+    .stackedBars__74017 {
+        transition: border-color .2s ease;
+        border-color: var(--border-faint) !important;
+    }
+}
+
+/* Panel Positioning */
+.visual-refresh [class^="panels_"] {
+    border-radius: 0;
+    left: var(--custom-guild-list-width);
+    bottom: 0;
+    width: calc(var(--custom-guild-sidebar-width) - var(--custom-guild-list-width) + 1px);
+}
+
+/* Channel Header Adjustments */
+.visual-refresh {
+    div.subtitleContainer_f75fb0,
+    main.container__133bf section.container__9293f {
+        width: calc(100% - 172px);
+    }
+
+    div.page_c48ade {
+        &:not(:has(> div.chat_f75fb0)),
+        & > div.chat_f75fb0 {
+            anchor-name: --vr-header-snippet;
+        }
+    }
+
+    div.base_c48ade {
+        grid-template-rows: [top] 0 [titleBarEnd] min-content [noticeEnd] 1fr [end];
+
+        &:has(div.bar_c38106 > div.trailing_c38106 > *:nth-child(3)) {
+            & div.subtitleContainer_f75fb0,
+            & main.container__133bf section.container__9293f {
+                width: calc(100% - 216px);
+            }
+        }
+
+        & > div.bar_c38106 {
+            position: absolute;
+            position-anchor: --vr-header-snippet;
+            top: 0;
+            right: anchor(right);
+            width: anchor-size(width);
+            padding: 0;
+        }
+
+        & div.trailing_c38106 {
+            background: var(--background-base-lower);
+            border: none;
+            border-bottom: 1px solid var(--border-subtle);
+            height: var(--custom-channel-header-height);
+        }
+    }
+
+    :not(:has(div.page_c48ade > div.chat_f75fb0)) div.base_c48ade > div.bar_c38106 {
+        right: 0 !important;
+    }
+
+    ul[data-list-id="guildsnav"] > div.itemsContainer_ef3116 { margin-top: 16px; }
+    div.topic__6ec1a { -webkit-app-region: no-drag; }
+}
